@@ -2,9 +2,8 @@ name: portfolio_env_clean
 channels:
   - defaults
 dependencies:
-  - python=3.10  # This matches your current environment's Python version
+  - python=3.10
   - pandas
   - numpy
   - scipy
-  # Add pip to manage non-Conda packages, if necessary
   - pip

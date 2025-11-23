@@ -37,3 +37,14 @@ prices_df = prices_df.dropna(how='all')
 print("Joined Price Data")
 print(prices_df.head())
 print(prices_df.tail())
+
+# calculates the expected return for each column
+mean_returns = prices_df.mean()
+
+# calculates the covariance for each column
+cov_matrix = prices_df.cov()
+
+print("\nexpected returns for each asset:\n")
+print(mean_returns)
+print("\n covariance matrix:\n")
+print(cov_matrix)
