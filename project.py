@@ -57,8 +57,8 @@ assets = list(mean_returns.index)
 num_assets = len(assets)
 
 # Creates a fucntion that returns the negative Sharpe Ratio (NEGATIVE because we are minimizing the function).
-# Where E(p) = weights * mean_return
-# Where port_vol = transposed weights * cov_matrix * weights
+# Where expected portfolio return (port_return) = weights * mean_return
+# Where portfolio standard deviation (port_vol) = transposed weights * cov_matrix * weights
 # (These matrix formulas are equivalent to the summation formulas we learned in class)   
 def neg_sharpe_ratio(weights, mean_returns, cov_matrix):
     weights = np.array(weights)
@@ -66,8 +66,9 @@ def neg_sharpe_ratio(weights, mean_returns, cov_matrix):
     port_vol = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
     return - port_return / port_vol   
 
-# Assigns constraints for optimization - weights must sum to 1
-constraints = ({
+# Assigns a constraint to the oprimization function:
+# - The sum of the weights must equal 1
+constraint = ({
     'type': 'eq',
     'fun': lambda w: np.sum(w) - 1
 })
@@ -79,14 +80,15 @@ bounds = tuple((0.0, 1.0) for _ in range(num_assets))
 initial_guess = [1.0 / num_assets] * num_assets
 
 # Runs the optimization aimed at minimizing the the objective function(the negative sharpe ratio).
-# The optimization starts at the initial guess and adjusts weights until the sharpe ratio is minimized.
+# Uses sequential least squares programming iterating through localized minimizations of the negative sharpe ratios starting at the initial guess.
+# SLSQP then stops once the solver finds a local minimum indicating a minimum to the objective function
 result = minimize(
     neg_sharpe_ratio,
     initial_guess,
     args=(mean_returns, cov_matrix),
     method='SLSQP',
     bounds=bounds,
-    constraints=constraints
+    constraints=constraint
 )
 optimal_weights = result.x
 max_sharpe = -neg_sharpe_ratio(optimal_weights, mean_returns, cov_matrix)
