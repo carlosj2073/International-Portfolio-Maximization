@@ -14,11 +14,11 @@
 1) **Data Ingestion and Consolidation:**
     * We read multiple asset price CSV files using the pandas library.
     * Each file was transformed into a data frame using a `for` loop.
-    * The individual data frames were then joined into a single master data frame, indexed by the **Date** and with the respective **country's asset prices** as the columns.
+    * The individual data frames were then joined into a single master data frame, indexed by the date and with the respective country's asset prices as the columns.
 
 2) **Return and Risk Metrics:**
-    * We calculated the **mean returns** for each asset (country).
-    * We calculated the **covariance matrix** ($\mathbf{\Sigma}$). The covariance matrix is essential as it accounts for the relationship (covariance) between each country, including the variance (covariance of an asset with itself) on the diagonal.
+    * We calculated the mean returns for each asset (country).
+    * We calculated the covariance matrix ($\mathbf{\Sigma}$). The covariance matrix is essential as it accounts for the relationship (covariance) between each country, including the variance (covariance of an asset with itself) on the diagonal.
 
 3) **Defining Constants:**
     * We created variables for constants used in the optimization: the `risk_free_rate` (set to 0 for simplicity) and the `length` of the assets (N).
@@ -45,7 +45,7 @@
 5) **Defining the Optimization Problem:**
     We used `scipy.optimize.minimize` to find the set of optimal weights ($\mathbf{w}^*$).
 
-* **Objective Function:** The solver minimizes the **negative Sharpe ratio** ($f(\mathbf{w}) = -SR(\mathbf{w})$) to indirectly achieve the goal of **maximizing** the positive Sharpe ratio.
+* **Objective Function:** The solver minimizes the negative Sharpe ratio ($f(\mathbf{w}) = -SR(\mathbf{w})$) to indirectly achieve the goal of maximizing the positive Sharpe ratio.
 
 * **Constraints:**
     * **Full Investment Constraint (Equality):** The sum of all asset weights must equal 1 (100%).
@@ -55,7 +55,7 @@
 
 6) **Executing the Optimization and Analyzing Results:**
     * We called the `scipy.optimize.minimize` function, supplying the objective function, initial weights (typically equal weighting), and the defined constraints, often using the **SLSQP** solver.
-    * The solver returned the **optimal portfolio weights** ($\mathbf{w}^*$) that maximize the Sharpe ratio.
-    * We then calculated the final metrics for the **Maximum Sharpe Ratio Portfolio**: the Sharpe Ratio, Expected Annual Return, and Expected Annual Volatility.
+    * The solver returned the optimal portfolio weights ($\mathbf{w}^*$) that maximize the Sharpe ratio.
+    * We then calculated the final metrics for the Maximum Sharpe Ratio Portfolio: the Sharpe Ratio, Expected Annual Return, and Expected Annual Volatility.
 
 ---
