@@ -34,7 +34,7 @@ prices_df = pd.concat(df_list.values(), axis=1, join='outer')
 prices_df = prices_df.dropna(how='all')
 
 # Prints data frame first 5 values
-print("Joined Return Data (FRED PC1 series):")
+print("\nJoined Return Data (FRED PC1 series):\n")
 print(prices_df.head())
 
 # Converts prices to decimals since FRED PC1 series are percent changes
@@ -94,7 +94,7 @@ optimal_weights = result.x
 max_sharpe = -neg_sharpe_ratio(optimal_weights, mean_returns, cov_matrix)
 
 # Prints the results of the optimization
-print("Optimal Portfolio Weights (no short-selling):")
+print("\nOptimal Portfolio Weights (no short-selling)\n")
 for name, weight in zip(assets, optimal_weights):
     print(f"{name:10s} : {weight:.4f}")
 
